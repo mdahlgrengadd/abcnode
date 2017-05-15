@@ -62,7 +62,7 @@ header
         title:  title[0],
         key:    k[0]
     }
-    for (i = 0; i < pairs.length; i++) {
+    for (var i = 0; i < pairs.length; i++) {
         p[pairs[i][0][0]] = pairs[i][0][1];
     }
     return p;
@@ -253,10 +253,14 @@ note = n:note_or_rest time:time_signature? _? tie:tie? {
 note_or_rest = n:(pitch / rest) { return n }
 
 pitch = acc:accidental? bn:basenote o:octave? {
+	if(!o)
+    	o = "";
+        
     var obj = {
         accidental: acc,
         note: bn + o
     }
+    
 
     if (!acc)
         delete obj.accidental;
@@ -301,7 +305,7 @@ sharp
  = "^" !("^") { return "sharp" }
 
 natural
- = "="
+ = "=" { return "" }
 
 flat
  = "_" !("_") { return "flat" }
@@ -389,4 +393,3 @@ Zs = [\u0020\u00A0\u1680\u180E\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u
 
 EOF
   = !.
-
